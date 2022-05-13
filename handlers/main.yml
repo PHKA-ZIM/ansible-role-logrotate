@@ -2,7 +2,7 @@
 - name: test configuration
   become: true
   ansible.builtin.command:
-    cmd: "/usr/sbin/logrotate -dfv {{ logrotate_logrotated_path }}/{{ item | basename }}"
-  loop: "{{ copied_files.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='name') | list }}"
+    cmd: "/usr/sbin/logrotate -dfv {{ item }}"
+  loop: "{{ copied_files.results | selectattr('changed', 'equalto', true) | map(attribute='dest') | list }}"
   register: result
   failed_when: "'error' in result.stdout"
