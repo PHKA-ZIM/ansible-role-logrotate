@@ -1,0 +1,3 @@
+---
+logrotate_local_logrotated_path: ./logrotate.d/
+logrotate_uninstall: false
