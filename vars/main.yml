@@ -1,5 +1,3 @@
 ---
-logrotate_logrotated_path: "/etc/logrotate.d/"
-logrotate_file_owner: root
-logrotate_file_group: root
-logrotate_file_mode: "644"
+logrotate_logrotated_path: /etc/logrotate.d/
+logrotate_file_mode: 0644
