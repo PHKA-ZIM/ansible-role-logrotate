@@ -1,8 +1,0 @@
----
-- name: Remove logrotate.d files
-  become: true
-  ansible.builtin.file:
-    path: "{{ logrotate_logrotated_path }}/{{ item | basename }}"
-    state: absent
-  with_fileglob:
-    - "{{ logrotate_local_logrotated_path }}/*"

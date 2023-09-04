@@ -1,0 +1,24 @@
+---
+- name: Copy logrotate.d files
+  become: true
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ logrotate_logrotated_path }}"
+    mode: "{{ logrotate_file_mode }}"
+    force: true
+  with_fileglob:
+    - "{{ logrotate_local_logrotated_path }}/*[!.j2]"
+  register: copied_files
+  notify: test configuration based on files
+
+- name: Copy logrotate.d templates
+  become: true
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ logrotate_logrotated_path }}/{{  item | basename | splitext | first }}"
+    mode: "{{ logrotate_file_mode }}"
+    force: true
+  with_fileglob:
+    - "{{ logrotate_local_logrotated_path }}/*.j2"
+  register: copied_templates
+  notify: test configuration based on templates

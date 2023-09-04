@@ -1,3 +1,6 @@
 ---
 logrotate_logrotated_path: /etc/logrotate.d/
 logrotate_file_mode: 0644
+
+logrotate_requirements:
+  - logrotate

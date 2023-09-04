@@ -1,8 +1,15 @@
 ---
 - name: Install logroate configuration
-  ansible.builtin.include_tasks: install.yml
   when: logrotate_uninstall == false
+  block:
+    - name: Install
+      ansible.builtin.include_tasks: install.yml
+
+    - name: Setup
+      ansible.builtin.include_tasks: setup.yml
 
 - name: Uninstall logroate configuration
-  ansible.builtin.include_tasks: uninstall.yml
   when: logrotate_uninstall == true
+  block:
+    - name: Clean
+      ansible.builtin.include_tasks: clean.yml

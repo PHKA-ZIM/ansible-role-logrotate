@@ -1,8 +1,16 @@
 ---
-- name: test configuration
+- name: test configuration based on files
   become: true
   ansible.builtin.command:
     cmd: "/usr/sbin/logrotate -dfv {{ item }}"
   loop: "{{ copied_files.results | selectattr('changed', 'equalto', true) | map(attribute='dest') | list }}"
+  register: result
+  failed_when: "'error' in result.stdout"
+
+- name: test configuration based on templates
+  become: true
+  ansible.builtin.command:
+    cmd: "/usr/sbin/logrotate -dfv {{ item }}"
+  loop: "{{ copied_templates.results | selectattr('changed', 'equalto', true) | map(attribute='dest') | list }}"
   register: result
   failed_when: "'error' in result.stdout"

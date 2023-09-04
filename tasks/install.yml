@@ -1,13 +1,8 @@
 ---
-- name: Copy logrotate.d files
+- name: Ensure that packages are installed
   become: true
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "{{ logrotate_logrotated_path }}"
-    mode: "{{ logrotate_file_mode }}"
-    force: true
-  with_fileglob:
-    - "{{ logrotate_local_logrotated_path }}/*"
-  register: copied_files
-  notify:
-    - test configuration
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    update_cache: true
+    state: present
+  loop: "{{ logrotate_requirements }}"
